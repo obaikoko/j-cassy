@@ -1,0 +1,21 @@
+.cartRemoveBtn {
+  background-color: white;
+  text-align: none;
+  border: none;
+  color: red;
+  padding: 2px;
+  margin: 2px;
+}
+
+.cartQtyBtn {
+  border: none;
+  background-color: transparent;
+}
+.cartQty {
+  border: 1px solid gray;
+  transform: scale(1.09);
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  width: 60px;
+}
