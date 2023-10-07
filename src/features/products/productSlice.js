@@ -2,9 +2,16 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import productService from './productService';
 
 
+const getProductFromLocalStorage = () => {
+  if (typeof window !== 'undefined') {
+    const products = localStorage.getItem('products');
+    return products ? JSON.parse(products) : [];
+  }
+  return null;
+};
 
 const initialState = {
-  products: [],
+  products: getProductFromLocalStorage(),
   isLoading: false,
   isSuccess: false,
   isError: false,

@@ -15,10 +15,10 @@ export default function Home() {
   );
 
   useEffect(() => {
+    dispatch(loadProducts());
     if (isSuccess) {
       setGoods(products);
     }
-    dispatch(loadProducts());
   }, [isSuccess]);
 
   if (isLoading) {
