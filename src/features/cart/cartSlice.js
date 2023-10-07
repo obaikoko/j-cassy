@@ -32,15 +32,20 @@ export const cartSlice = createSlice({
         localStorage.setItem('cartItem', JSON.stringify(state.cartItem));
       }
     },
-
+    clearCart(state, action) {
+      state.cartItem = [];
+      if (typeof window != 'undefined') {
+        localStorage.setItem('cartItem', JSON.stringify(state.cartItem));
+      }
+    },
     removeFromCart(state, action) {
       const filteredItems = state.cartItem.filter(
         (cartItem) => cartItem._id !== action.payload._id
       );
       state.cartItem = filteredItems;
-      // if (typeof window != 'undefined') {
-      //   localStorage.setItem('cartItem', JSON.stringify(state.cartItem));
-      // }
+      if (typeof window != 'undefined') {
+        localStorage.setItem('cartItem', JSON.stringify(state.cartItem));
+      }
     },
     decreaseCartQty(state, action) {
       const itemIndex = state.cartItem.findIndex(
@@ -53,14 +58,14 @@ export const cartSlice = createSlice({
           (cartItem) => cartItem._id !== action.payload._id
         );
         state.cartItem = filteredItems;
-        // if (typeof window != 'undefined') {
-        //   localStorage.setItem('cartItem', JSON.stringify(state.cartItem));
-        // }
+        if (typeof window != 'undefined') {
+          localStorage.setItem('cartItem', JSON.stringify(state.cartItem));
+        }
       }
     },
-    increaseCartQty(state, action) {},
+   
   },
 });
 
-export const { addToCart, removeFromCart, decreaseCartQty } = cartSlice.actions;
+export const { addToCart, removeFromCart, decreaseCartQty,clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

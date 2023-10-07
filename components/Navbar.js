@@ -1,6 +1,22 @@
 import Link from 'next/link';
+import { logout, reset } from '@/src/features/auth/authSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
 
 const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState('');
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    setIsLoggedIn(user);
+  }, [isLoggedIn, user]);
+
+  const onClick = () => {
+    dispatch(logout());
+    dispatch(reset());
+    window.location.reload()
+  };
   return (
     <div>
       <nav className='navbar  navbar-expand-lg bg-body-tertiary  '>
@@ -55,9 +71,15 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li className='nav-item'>
-                  <Link href='/login' className='nav-link'>
-                    LOGIN
-                  </Link>
+                  {isLoggedIn ? (
+                    <Link href='/login' className='nav-link' onClick={onClick}>
+                      LOGOUT
+                    </Link>
+                  ) : (
+                    <Link href='/login' className='nav-link'>
+                      LOGIN
+                    </Link>
+                  )}
                 </li>
               </ul>
             </div>

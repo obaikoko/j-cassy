@@ -1,8 +1,11 @@
 import CartItem from '@/components/CartItem';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { clearCart } from '@/src/features/cart/cartSlice';
+import style from '../styles/cart.module.css'
 
 function cart() {
+  const dispatch = useDispatch();
   const [products, setProducts] = useState('');
   const goods = useSelector((state) => state.cart.cartItem);
 
@@ -10,6 +13,9 @@ function cart() {
     setProducts(goods);
   }, [goods]);
 
+  const onClick = () => {
+    dispatch(clearCart());
+  };
   return (
     <div className='container mt-4'>
       <h2>Shopping Cart</h2>
@@ -26,6 +32,9 @@ function cart() {
             {products.map((product) => (
               <CartItem key={product._id} product={product} />
             ))}
+            <button className={style.cartQtyBtn} onClick={onClick}>
+              Clear Cart
+            </button>
           </>
         ) : (
           <>

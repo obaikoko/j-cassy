@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import { loadProducts } from '@/src/features/products/productSlice';
 import ProductCard from '@/components/ProductCard';
+import Spinner from '@/components/Spinner';
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -18,7 +19,11 @@ export default function Home() {
       setGoods(products);
     }
     dispatch(loadProducts());
-  }, [goods, isError, isSuccess, message]);
+  }, [isSuccess]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <>
       <Head>
@@ -30,13 +35,13 @@ export default function Home() {
           <ProductForm />
         </div>
 
-        <div className='row row-cols-1 row-cols-md-3 g-1'>
+        <div className='row row-cols-1 row-cols-md-3 g-1 align-items-center justify-content-center'>
           {goods ? (
             goods.map((good) => <ProductCard key={good._id} good={good} />)
           ) : (
-            <>
+            <div>
               <h1>No Products to display</h1>
-            </>
+            </div>
           )}
         </div>
       </main>

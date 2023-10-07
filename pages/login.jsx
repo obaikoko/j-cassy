@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../src/features/auth/authSlice';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
-
 import { useEffect } from 'react';
+import Spinner from '@/components/Spinner';
 
 function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -20,12 +20,13 @@ function Login() {
 
   useEffect(() => {
     if (isError) {
-      console.error(message);
+      toast.error(message);
     }
-    if (user || isSuccess) {
+    if (user && isSuccess) {
+      toast.success('logged in')
       navigate.push('/');
     }
-  }, [user, isError, isSuccess, message, navigate]);
+  }, [user]);
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -42,7 +43,9 @@ function Login() {
 
     dispatch(login(userData));
   };
-
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <div className='container'>
       <div className='row justify-content-center mt-5'>

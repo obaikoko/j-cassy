@@ -7,6 +7,7 @@ function ProductCard({ good }) {
   const dispatch = useDispatch();
   const onClick = (good) => {
     dispatch(addToCart(good));
+    toast.success(`${good.name} added successfully`)
   };
   return (
     <div className={style.productCard}>
