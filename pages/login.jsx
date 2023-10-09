@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../src/features/auth/authSlice';
+import { login, reset } from '../src/features/auth/authSlice';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
@@ -25,8 +25,10 @@ function Login() {
     if (user && isSuccess) {
       toast.success('logged in')
       navigate.push('/');
+      dispatch(reset())
+
     }
-  }, [user]);
+  }, [user, isError]);
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
