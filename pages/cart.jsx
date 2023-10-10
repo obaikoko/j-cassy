@@ -56,7 +56,7 @@ function cart() {
                   <h3>${cartTotalAmount}</h3>
                 </div>
                 <p>Amount for total products in the cart</p>
-                <button className='btn btn-success'>check out</button>
+                <button className='btn btn-success '>check out</button>
               </div>
             </div>
           </>

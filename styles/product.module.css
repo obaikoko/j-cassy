@@ -1,7 +1,6 @@
 .productCard:hover {
   cursor: pointer;
-  /* /* background-color: #f8f9fa; */
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
-  /* transition: background-color 0.3s, box-shadow 0.3s;  */
-  transform: scale(1.08);
+  background-color: #f8f9fa;
+   transition: background-color 0.3s, 
+
 }

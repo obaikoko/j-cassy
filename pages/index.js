@@ -7,6 +7,7 @@ import { loadProducts } from '@/src/features/products/productSlice';
 import { getTotal } from '@/src/features/cart/cartSlice';
 import ProductCard from '@/components/ProductCard';
 import Spinner from '@/components/Spinner';
+import { reset } from '@/src/features/products/productSlice';
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -16,8 +17,9 @@ export default function Home() {
   );
 
   useEffect(() => {
-    dispatch(loadProducts());
+    // dispatch(loadProducts());
     dispatch(getTotal());
+    dispatch(reset())
     if (isSuccess) {
       setGoods(products);
     }

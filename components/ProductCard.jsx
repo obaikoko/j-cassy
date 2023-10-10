@@ -2,6 +2,7 @@ import React from 'react';
 import style from '../styles/product.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '@/src/features/cart/cartSlice';
+import Link from 'next/link';
 
 function ProductCard({ good }) {
   const dispatch = useDispatch();
@@ -25,6 +26,9 @@ function ProductCard({ good }) {
         <button className='btn btn-primary' onClick={() => onClick(good)}>
           Add to Cart
         </button>
+        <Link href={`products/${good._id}`}>
+          <button className='btn btn-light text-primary'>update</button>
+        </Link>
       </div>
     </div>
   );

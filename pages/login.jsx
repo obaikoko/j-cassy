@@ -20,13 +20,10 @@ function Login() {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message);
+      dispatch(reset());
     }
-    if (user && isSuccess) {
-      toast.success('logged in')
+    if (user || isSuccess) {
       navigate.push('/');
-      dispatch(reset())
-
     }
   }, [user, isError]);
   const onChange = (e) => {
@@ -80,7 +77,7 @@ function Login() {
                     onChange={onChange}
                   />
                 </div>
-                <button type='submit' className='btn btn-primary'>
+                <button type='submit' className='btn btn-primary my-3'>
                   Login
                 </button>
               </form>

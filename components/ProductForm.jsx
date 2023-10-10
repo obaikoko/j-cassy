@@ -13,6 +13,7 @@ const productForm = () => {
     price: '',
   });
   const { title, description, category, price } = formData;
+  const { isError, message } = useSelector((state) => state.products);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -37,26 +38,24 @@ const productForm = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (title && description && category && price) {
-      const productData = {
-        title,
-        description,
-        category,
-        price,
-        photo: previewSource,
-      };
-      console.log(productData);
-      dispatch(addProduct(productData));
-      //   setFormData({
-      //     title: '',
-      //     description: '',
-      //     category: '',
-      //     price: '',
-      //   });
+
+    const productData = {
+      title,
+      description,
+      category,
+      price,
+      photo: previewSource,
+    };
+    dispatch(updateProduct(productData, productId));
+    if (isError) {
+      toast.error(message);
     }
-     else {
-      toast.error(' please add all field ');
-    }
+    //   setFormData({
+    //     title: '',
+    //     description: '',
+    //     category: '',
+    //     price: '',
+    //   });
   };
   return (
     <>
