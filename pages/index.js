@@ -17,11 +17,11 @@ export default function Home() {
   );
 
   useEffect(() => {
-    // dispatch(loadProducts());
+    dispatch(loadProducts());
     dispatch(getTotal());
-    dispatch(reset())
     if (isSuccess) {
       setGoods(products);
+      // dispatch(reset())
     }
   }, [isSuccess]);
 

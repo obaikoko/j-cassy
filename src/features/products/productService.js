@@ -3,9 +3,14 @@ const API_URL = 'https://j-cassybackend.onrender.com/products/';
 
 const loadProducts = async () => {
   const response = await axios.get(API_URL);
-   if (typeof window !== 'undefined') {
-     localStorage.setItem('products', JSON.stringify(response.data));
-   }
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('products', JSON.stringify(response.data));
+  }
+  return response.data;
+};
+
+const loadProduct = async (id) => {
+  const response = await axios.get(API_URL+id);
   return response.data;
 };
 
@@ -19,7 +24,6 @@ const addProduct = async (productData, token) => {
   return response.data;
 };
 
-
 const updateProduct = async (productData, productId, token) => {
   const config = {
     headers: {
@@ -32,6 +36,7 @@ const updateProduct = async (productData, productId, token) => {
 
 const productService = {
   loadProducts,
+  loadProduct,
   addProduct,
   updateProduct,
 };

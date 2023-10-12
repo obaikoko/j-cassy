@@ -46,7 +46,7 @@ const productForm = () => {
       price,
       photo: previewSource,
     };
-    dispatch(updateProduct(productData, productId));
+    dispatch(addProduct(productData));
     if (isError) {
       toast.error(message);
     }

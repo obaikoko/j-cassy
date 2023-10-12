@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import productService from './productService';
-import {toast} from 'react-toastify'
-
+import { toast } from 'react-toastify';
 
 const getProductFromLocalStorage = () => {
   if (typeof window !== 'undefined') {
@@ -13,6 +12,7 @@ const getProductFromLocalStorage = () => {
 
 const initialState = {
   products: getProductFromLocalStorage(),
+  product: null,
   isLoading: false,
   isSuccess: false,
   isError: false,
@@ -20,7 +20,7 @@ const initialState = {
 };
 
 export const loadProducts = createAsyncThunk(
-  'product/load',
+  'products/load',
   async (ThunkAPI) => {
     try {
       return await productService.loadProducts();
@@ -36,6 +36,25 @@ export const loadProducts = createAsyncThunk(
     }
   }
 );
+
+export const loadProduct = createAsyncThunk(
+  'product/load',
+  async (id, ThunkAPI) => {
+    try {
+      return await productService.loadProduct(id);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return ThunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 
 export const addProduct = createAsyncThunk(
   'product/add',
@@ -56,6 +75,9 @@ export const addProduct = createAsyncThunk(
     }
   }
 );
+
+
+
 
 export const productSlice = createSlice({
   name: 'product',
@@ -87,6 +109,21 @@ export const productSlice = createSlice({
         state.products = [];
         toast.error(action.payload);
       })
+      .addCase(loadProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(loadProduct.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.product = action.payload;
+      })
+      .addCase(loadProduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.product = null;
+        toast.error(action.payload);
+      })
       .addCase(addProduct.pending, (state) => {
         state.isLoading = true;
       })
@@ -94,14 +131,14 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.products.push(action.payload);
-        toast.success(`${action.payload.title} has been added to products`)
+        toast.success(`${action.payload.title} has been added to products`);
       })
       .addCase(addProduct.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
         state.products = [];
-        toast.error(action.payload)
+        toast.error(action.payload);
       });
   },
 });
