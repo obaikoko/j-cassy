@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-// import axios from 'axios';
+import UpdateProductForm from '@/components/UpdateProductForm';
 import { useState, useEffect } from 'react';
 import { loadProduct, reset } from '@/src/features/products/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -44,9 +44,14 @@ function ProductDetails() {
               <p>Description: {data.description}</p>
               <p>Category: {data.category}</p>
               <p>Price: ${data.price}</p>
-              <div className='mt-3'>
-                <button className='btn text-danger mr-2'>Delete</button>
-                <button className='btn text-success'>Update</button>
+              <div className='mt-3 d-flex'>
+                
+                <div className=''>
+                  Delete
+                </div>
+                <div className=''>
+                  <UpdateProductForm product={data} />
+                </div>
               </div>
             </div>
           </div>

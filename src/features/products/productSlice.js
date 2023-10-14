@@ -63,7 +63,24 @@ export const addProduct = createAsyncThunk(
       const token = ThunkAPI.getState().auth.user.token;
       return await productService.addProduct(productData, token);
     } catch (error) {
-      console.error('Error:', error);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return ThunkAPI.rejectWithValue(message);
+    }
+  }
+);
+export const updateProduct = createAsyncThunk(
+  'product/update',
+  async (productId,productData, ThunkAPI) => {
+    try {
+      const token = ThunkAPI.getState().auth.user.token;
+      return await productService.updateProductroduct(productId, productData, token);
+    } catch (error) {
       const message =
         (error.response &&
           error.response.data &&
@@ -131,13 +148,27 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.products.push(action.payload);
-        toast.success(`${action.payload.title} has been added to products`);
+        toast.success(`Product Added successfully`);
       })
       .addCase(addProduct.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-        state.products = [];
+        toast.error(action.payload);
+      })
+      .addCase(updateProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.products = action.payload;
+        toast.success(`Product updated successfully`);
+      })
+      .addCase(updateProduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
         toast.error(action.payload);
       });
   },

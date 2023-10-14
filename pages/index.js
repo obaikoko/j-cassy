@@ -7,7 +7,7 @@ import { loadProducts } from '@/src/features/products/productSlice';
 import { getTotal } from '@/src/features/cart/cartSlice';
 import ProductCard from '@/components/ProductCard';
 import Spinner from '@/components/Spinner';
-import { reset } from '@/src/features/products/productSlice';
+
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -15,13 +15,13 @@ export default function Home() {
   const { products, isLoading, isSuccess, isError, message } = useSelector(
     (state) => state.products
   );
+  const {user} = useSelector(state => state.auth)
 
   useEffect(() => {
     dispatch(loadProducts());
     dispatch(getTotal());
     if (isSuccess) {
       setGoods(products);
-      // dispatch(reset())
     }
   }, [isSuccess]);
 
@@ -32,8 +32,8 @@ export default function Home() {
         <title>J-CASSY</title>
       </Head>
       <main>
-        <h1 className='text-center'>NEW PRODUCTS</h1>
-        <div className='ProductForm d-flex justify-content-center m-3 p-3'>
+        <h1 className='text-center'>NEW PRODUCTS</h1> 
+        <div className=' d-flex justify-content-center m-3 p-3'>
           <ProductForm />
         </div>
 
