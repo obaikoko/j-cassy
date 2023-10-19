@@ -27,7 +27,7 @@ function ProductCard({ good }) {
           Add to Cart
         </button>
         <Link href={`products/${good._id}`}>
-          <button className='btn btn-light text-primary'>update</button>
+          <button className='btn btn-light text-primary'>view</button>
         </Link>
       </div>
     </div>

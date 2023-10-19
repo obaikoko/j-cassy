@@ -12,6 +12,7 @@ import Spinner from '@/components/Spinner';
 export default function Home() {
   const dispatch = useDispatch();
   const [goods, setGoods] = useState('');
+  const [admin, setAdmin] = useState('')
   const { products, isLoading, isSuccess, isError, message } = useSelector(
     (state) => state.products
   );
@@ -20,6 +21,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(loadProducts());
     dispatch(getTotal());
+    setAdmin(user)
     if (isSuccess) {
       setGoods(products);
     }
@@ -33,9 +35,9 @@ export default function Home() {
       </Head>
       <main>
         <h1 className='text-center'>NEW PRODUCTS</h1> 
-        <div className=' d-flex justify-content-center m-3 p-3'>
+     {(admin && admin.role === 'Admin') ? (   <div className=' d-flex justify-content-center m-3 p-3'>
           <ProductForm />
-        </div>
+        </div>) : (<></>)}
 
         <div className='row row-cols-1 row-cols-md-3 g-1 align-items-center justify-content-center'>
           {goods ? (

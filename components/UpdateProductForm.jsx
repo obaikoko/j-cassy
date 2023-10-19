@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addProduct, updateProduct } from '@/src/features/products/productSlice';
+import {
+  addProduct,
+  updateProduct,
+} from '@/src/features/products/productSlice';
 import { toast } from 'react-toastify';
-const updateProductForm = ({product}) => {
+const updateProductForm = ({ product, id }) => {
   const [fileInput, setFileInput] = useState('');
   const [previewSource, setPreviewSource] = useState('');
   const dispatch = useDispatch();
@@ -46,7 +49,9 @@ const updateProductForm = ({product}) => {
       price,
       photo: previewSource,
     };
-    dispatch(updateProduct(productData));
+
+    dispatch(updateProduct({ productData, productId: id }));
+
     if (isError) {
       toast.error(message);
     }
@@ -66,7 +71,7 @@ const updateProductForm = ({product}) => {
         data-bs-target='#updateProduct'
       >
         <div>
-          <div > Update Product</div>
+          <div> Update Product</div>
         </div>
       </button>
 
