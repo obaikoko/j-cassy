@@ -101,10 +101,10 @@ export const addProduct = createAsyncThunk(
 
 export const updateProduct = createAsyncThunk(
   'product/update',
-  async ({productId, productData}, ThunkAPI) => {
+  async ({ productId, productData }, ThunkAPI) => {
     try {
       const token = ThunkAPI.getState().auth.user.token;
-      return await productService.updateProduct( productData, productId, token);
+      return await productService.updateProduct(productData, productId, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -118,13 +118,12 @@ export const updateProduct = createAsyncThunk(
   }
 );
 
-
 export const deleteProduct = createAsyncThunk(
   'product/delete',
-  async ({productId}, ThunkAPI) => {
+  async (productId, ThunkAPI) => {
     try {
       const token = ThunkAPI.getState().auth.user.token;
-      return await productService.deleteProduct( productId, token);
+      return await productService.deleteProduct(productId, token);
     } catch (error) {
       const message =
         (error.response &&

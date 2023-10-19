@@ -1,16 +1,16 @@
 import { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { login, reset } from '../src/features/auth/authSlice';
+import { login, reset, verifyResetPassword } from '../src/features/auth/authSlice';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import Spinner from '@/components/Spinner';
 
-function Login() {
-  const [formData, setFormData] = useState({ email: '', password: '' });
-  const { email, password } = formData;
+function verifyPassword() {
+  const [formData, setFormData] = useState({ email: '', otp: '', password: '' });
+  const { email, otp, password } = formData;
 
   const dispatch = useDispatch();
   const navigate = useRouter();
@@ -23,10 +23,10 @@ function Login() {
     if (isError) {
       dispatch(reset());
     }
-    if (user || isSuccess) {
-      navigate.push('/');
+    if (isSuccess) {
+      navigate.push('/login');
     }
-  }, [user, isError]);
+  }, [isSuccess, isError]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -39,10 +39,13 @@ function Login() {
     e.preventDefault();
     const userData = {
       email,
+      otp,
       password,
     };
 
-    dispatch(login(userData));
+    console.log(userData);
+
+    dispatch(verifyResetPassword(userData));
   };
   if (isLoading) {
     return <Spinner />;
@@ -53,12 +56,12 @@ function Login() {
         <div className='col-md-6'>
           <div className='card'>
             <div className='card-header'>
-              <h4>Login</h4>
+              <h4 className='text-center'>Enter OTP</h4>
             </div>
             <div className='card-body'>
               <form onSubmit={onSubmit}>
                 <div className='form-group'>
-                  <label htmlFor='email'>Username</label>
+                  <label htmlFor='email'>Confirm Email</label>
                   <input
                     type='email'
                     name='email'
@@ -69,7 +72,18 @@ function Login() {
                   />
                 </div>
                 <div className='form-group'>
-                  <label htmlFor='password'>Password</label>
+                  <label htmlFor='otp'>OTP</label>
+                  <input
+                    type='password'
+                    name='otp'
+                    className='form-control'
+                    id='otp'
+                    value={otp}
+                    onChange={onChange}
+                  />
+                </div>
+                <div className='form-group'>
+                  <label htmlFor='password'>New Password</label>
                   <input
                     type='password'
                     name='password'
@@ -80,7 +94,7 @@ function Login() {
                   />
                 </div>
                 <button type='submit' className='btn btn-primary my-3'>
-                  Login
+                  submit
                 </button>
               </form>
               <Link href='/resetPassword' className='text-decoration-none'>
@@ -94,4 +108,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default verifyPassword;

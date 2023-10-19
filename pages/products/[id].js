@@ -34,7 +34,6 @@ function ProductDetails() {
   }, [isSuccess, product]);
 
   const onClick = () => {
-    console.log(id);
     dispatch(deleteProduct(id));
   };
 
