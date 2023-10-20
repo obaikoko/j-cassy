@@ -2,6 +2,7 @@ import axios from 'axios';
 const API_URL = 'https://j-cassybackend.onrender.com/products/';
 // const API_URL = 'http://localhost:5000/products/';
 
+
 const loadProducts = async () => {
   const response = await axios.get(API_URL);
   if (typeof window !== 'undefined') {
