@@ -1,0 +1,6 @@
+.productCard:hover {
+  cursor: pointer;
+  background-color: #f8f9fa;
+   transition: background-color 0.3s, 
+
+}
